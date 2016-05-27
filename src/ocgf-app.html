@@ -1,0 +1,27 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="ocgf-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello, this is [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'ocgf-app',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'OC Grace First App',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
