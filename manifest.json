@@ -1,0 +1,7 @@
+{
+  "name": "OCGraceFirstApp",
+  "short_name": "OCGraceFirstApp",
+  "description": "This is for viewing OC Grace First information quickly.",
+  "start_url": "/",
+  "display": "standalone"
+}
