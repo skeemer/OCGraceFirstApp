@@ -7,6 +7,11 @@
 <dom-module id="ocgf-weekly">
   <template>
     <style>
+      paper-card {
+        @apply(--layout-vertical);
+        /*@apply(--center-justified);*/
+        margin: 0 16px 16px 16px;
+      }
     </style>
     <iron-ajax auto
                url="http://www.ocgracefirst.com/wp-json/llch/v2/weekly/current/last/3"
@@ -20,11 +25,11 @@
         persisted-data="{{weekly}}">
     </app-indexeddb-mirror>
     <template is="dom-repeat" items="{{weekly}}" as="week">
-      <paper-card heading="I'm Missing!">
-        <div class="card-content">
-          {{week.date}} &ndash;
-          Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-        </div>
+      <paper-card heading="{{week.date}}">
+        <!--<div class="card-content">-->
+           <!--&ndash;-->
+          <!--Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.-->
+        <!--</div>-->
         <div class="card-actions">
           <paper-button raised disabled$="{{!week.bulletin}}">Bulletin</paper-button>
           <paper-button raised disabled$="{{!week.study_guide}}">Study Guide</paper-button>

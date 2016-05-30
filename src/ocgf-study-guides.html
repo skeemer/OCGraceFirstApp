@@ -7,7 +7,8 @@
   <template>
     <style>
       paper-card {
-        /*@apply(--layout-vertical);*/
+        @apply(--layout-vertical);
+        margin: 0 16px 16px 16px;
         /*@apply(--center-justified);*/
         /*@apply(--layout-center-center);*/
         /*@apply(--shadow-elevation-2dp);*/
@@ -30,14 +31,7 @@
         persisted-data="{{study-guides}}">
     </app-indexeddb-mirror>
     <template is="dom-repeat" items="{{study-guides}}" as="study-guide">
-      <paper-card heading="test">
-        <div class="card-content">
-          {{study-guide.date}}<br>
-          Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-        </div>
-        <div class="card-actions">
-        </div>
-      </paper-card>
+      <paper-card heading="{{study-guide.title}}"></paper-card>
     </template>
   </template>
 
