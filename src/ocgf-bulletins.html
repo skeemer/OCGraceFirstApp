@@ -33,15 +33,15 @@
         persisted-data="{{bulletins}}">
     </app-indexeddb-mirror>
     <template is="dom-repeat" items="{{bulletins}}" as="bulletin">
-      <paper-card heading="{{bulletin.prettyDate}}"></paper-card>
+      <paper-card heading="{{bulletin.prettyDate}}" on-tap="openBulletin"></paper-card>
     </template>
   </template>
 
   <script>
     Polymer({
       is: 'ocgf-bulletins',
-      isUndefined: function (field) {
-        return field === undefined;
+      openBulletin: function (e) {
+        window.open(e.model.bulletin.url, '_blank');
       }
     });
 

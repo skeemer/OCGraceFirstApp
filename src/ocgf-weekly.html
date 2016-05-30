@@ -31,7 +31,7 @@
           <!--Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.-->
         <!--</div>-->
         <div class="card-actions">
-          <paper-button raised disabled$="{{!week.bulletin}}">Bulletin</paper-button>
+          <paper-button raised disabled$="{{!week.bulletin}}" on-tap="openBulletin">Bulletin</paper-button>
           <paper-button raised disabled$="{{!week.study_guide}}">Study Guide</paper-button>
         </div>
       </paper-card>
@@ -42,8 +42,8 @@
   <script>
     Polymer({
       is: 'ocgf-weekly',
-      isUndefined: function (field) {
-        return field === undefined;
+      openBulletin: function (e) {
+        window.open(e.model.week.bulletin, '_blank');
       }
     });
 
