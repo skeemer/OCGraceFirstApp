@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<dom-module id="ocgf-bulletins">
+  <template>
+    <style>
+    </style>
+    <iron-ajax auto
+               url="http://www.ocgracefirst.com/wp-json/llch/v2/bulletins/recent"
+               handle-as="json"
+               verbose="true"
+               last-response="{{bulletins-live}}">
+    </iron-ajax>
+    <app-indexeddb-mirror
+        key="bulletins"
+        data="{{bulletins-live}}"
+        persisted-data="{{bulletins}}">
+    </app-indexeddb-mirror>
+    <template is="dom-repeat" items="{{bulletins}}" as="bulletin">
+      <paper-card heading="test">
+        <div class="card-content">
+          {{bulletin.date}}<br>
+          Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+        </div>
+        <div class="card-actions">
+        </div>
+      </paper-card>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ocgf-bulletins',
+      isUndefined: function (field) {
+        return field === undefined;
+      }
+    });
+
+  </script>
+</dom-module>

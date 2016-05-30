@@ -1,0 +1,46 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="ocgf-weekly">
+  <template>
+    <style>
+    </style>
+    <iron-ajax auto
+               url="http://www.ocgracefirst.com/wp-json/llch/v2/weekly/current/last/3"
+               handle-as="json"
+               verbose="true"
+               last-response="{{weekly-live}}">
+    </iron-ajax>
+    <app-indexeddb-mirror
+        key="weekly"
+        data="{{weekly-live}}"
+        persisted-data="{{weekly}}">
+    </app-indexeddb-mirror>
+    <template is="dom-repeat" items="{{weekly}}" as="week">
+      <paper-card heading="I'm Missing!">
+        <div class="card-content">
+          {{week.date}} &ndash;
+          Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+        </div>
+        <div class="card-actions">
+          <paper-button raised disabled$="{{!week.bulletin}}">Bulletin</paper-button>
+          <paper-button raised disabled$="{{!week.study_guide}}">Study Guide</paper-button>
+        </div>
+      </paper-card>
+      <div>[[repo.date]]</div>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ocgf-weekly',
+      isUndefined: function (field) {
+        return field === undefined;
+      }
+    });
+
+  </script>
+</dom-module>

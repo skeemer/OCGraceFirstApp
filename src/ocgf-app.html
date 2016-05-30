@@ -1,13 +1,81 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+
 <dom-module id="ocgf-app">
   <template>
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
     <style>
       :host {
         display: block;
+        --app-primary-color: var(--paper-light-blue-400);
+        --app-secondary-color: black;
       }
+
+      app-header {
+        background-color: var(--app-primary-color);
+        color: #fff;
+        /*@apply(--paper-light-blue-400);*/
+      }
+
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
     </style>
-    <h2>Hello, this is [[prop1]]</h2>
+
+    <app-drawer-layout fullbleed>
+
+      <!-- Drawer content -->
+      <app-drawer>
+        <app-toolbar>Menu</app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="ocgf-weekly" href="/">Weekly</a>
+          <a name="ocgf-bulletins" href="/ocgf-bulletins">Bulletins</a>
+          <a name="ocgf-study-guides" href="/ocgf-study-guides">Study Guides</a>
+        </iron-selector>
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+        <app-header effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <div title>OC Grace First App</div>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+          <ocgf-weekly name="ocgf-weekly"></ocgf-weekly>
+          <ocgf-bulletins name="ocgf-bulletins"></ocgf-bulletins>
+          <ocgf-study-guides name="ocgf-study-guides"></ocgf-study-guides>
+          <!--<my-data-test name="data-test"></my-data-test>-->
+        </iron-pages>
+
+      </app-header-layout>
+    </app-drawer-layout>
   </template>
 
   <script>
@@ -16,11 +84,25 @@
       is: 'ocgf-app',
 
       properties: {
-        prop1: {
+        page: {
           type: String,
-          value: 'OC Grace First App',
-        },
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        }
       },
+
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+
+      _routePageChanged: function (page) {
+        this.page = page || 'ocgf-weekly';
+      },
+
+      _pageChanged: function (page) {
+        // load page import on demand.
+        this.importHref(this.resolveUrl(page + '.html'), null, null, true);
+      }
 
     });
   </script>
