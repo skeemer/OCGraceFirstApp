@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="ocgf-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-styles/shadow.html">
 
@@ -8,17 +8,14 @@
   <template>
     <style>
       paper-card {
-        @apply(--shadow-elevation-4dp);
         @apply(--layout-vertical);
-        @apply(--center-justified);
-        /*@apply(--layout-center-center);*/
-        /*max-width: 500px;*/
-        /*width: 100%;*/
         margin: 0 16px 16px 16px;
-        /*box-sizing: border-box;*/
-        /*--paper-card-background-color: white;*/
-        /*--paper-card-header-color: white;*/
-        /*--paper-card-header-text: {background-color: white;};*/
+      }
+      paper-card:first-of-type {
+        margin-top: 16px;
+      }
+      paper-card .card-actions paper-button {
+        margin: 10px 10px 10px 0;
       }
     </style>
     <iron-ajax auto
@@ -27,13 +24,15 @@
                verbose="true"
                last-response="{{bulletins-live}}">
     </iron-ajax>
-    <app-indexeddb-mirror
+    <ocgf-indexeddb-mirror
         key="bulletins"
         data="{{bulletins-live}}"
         persisted-data="{{bulletins}}">
-    </app-indexeddb-mirror>
-    <template is="dom-repeat" items="{{bulletins}}" as="bulletin">
-      <paper-card heading="{{bulletin.prettyDate}}" on-tap="openBulletin"></paper-card>
+    </ocgf-indexeddb-mirror>
+    <template is="dom-repeat" items="[[bulletins]]" as="bulletin">
+      <paper-card heading="[[bulletin.prettyDate]]" on-tap="openBulletin">
+        <paper-ripple recenters></paper-ripple>
+      </paper-card>
     </template>
   </template>
 

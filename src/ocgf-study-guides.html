@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
+<link rel="import" href="ocgf-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <dom-module id="ocgf-study-guides">
@@ -9,14 +9,12 @@
       paper-card {
         @apply(--layout-vertical);
         margin: 0 16px 16px 16px;
-        /*@apply(--center-justified);*/
-        /*@apply(--layout-center-center);*/
-        /*@apply(--shadow-elevation-2dp);*/
-        /*max-width: 500px;*/
-        /*margin-bottom: 16px;*/
-        /*--paper-card-background-color: white;*/
-        /*--paper-card-header-color: white;*/
-        /*--paper-card-header-text: {background-color: white;};*/
+      }
+      paper-card:first-of-type {
+        margin-top: 16px;
+      }
+      paper-card .card-actions paper-button {
+        margin: 10px 10px 10px 0;
       }
     </style>
     <iron-ajax auto
@@ -25,13 +23,15 @@
                verbose="true"
                last-response="{{study-guides-live}}">
     </iron-ajax>
-    <app-indexeddb-mirror
+    <ocgf-indexeddb-mirror
         key="study-guides"
         data="{{study-guides-live}}"
         persisted-data="{{study-guides}}">
-    </app-indexeddb-mirror>
-    <template is="dom-repeat" items="{{study-guides}}" as="study-guide">
-      <paper-card heading="{{study-guide.title}}"></paper-card>
+    </ocgf-indexeddb-mirror>
+    <template is="dom-repeat" items="[[study-guides]]" as="study-guide">
+      <paper-card heading="[[study-guide.title]]">
+        <paper-ripple recenters></paper-ripple>
+      </paper-card>
     </template>
   </template>
 

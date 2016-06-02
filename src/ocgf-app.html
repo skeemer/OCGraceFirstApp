@@ -3,6 +3,8 @@
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+
 <link rel="import" href="../bower_components/paper-styles/color.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
@@ -26,6 +28,8 @@
         pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
+
+    <iron-media-query query="max-width: 640px" query-matches="{{drawerHiding}}"></iron-media-query>
 
     <style>
       :host {
@@ -69,9 +73,9 @@
       <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="ocgf-weekly" href="/">Weekly</a>
-          <a name="ocgf-bulletins" href="/ocgf-bulletins">Bulletins</a>
-          <a name="ocgf-study-guides" href="/ocgf-study-guides">Study Guides</a>
+          <a name="weekly" href="/">Quick List</a>
+          <a name="bulletins" href="/bulletins">Bulletins</a>
+          <a name="study-guides" href="/study-guides">Study Guides</a>
         </iron-selector>
       </app-drawer>
 
@@ -85,9 +89,9 @@
         </app-header>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-          <ocgf-weekly name="ocgf-weekly"></ocgf-weekly>
-          <ocgf-bulletins name="ocgf-bulletins"></ocgf-bulletins>
-          <ocgf-study-guides name="ocgf-study-guides"></ocgf-study-guides>
+          <ocgf-weekly name="weekly"></ocgf-weekly>
+          <ocgf-bulletins name="bulletins"></ocgf-bulletins>
+          <ocgf-study-guides name="study-guides"></ocgf-study-guides>
           <!--<my-data-test name="data-test"></my-data-test>-->
         </iron-pages>
 
@@ -119,13 +123,13 @@
       ],
 
       _routePageChanged: function (page) {
-        this.page = page || 'ocgf-weekly';
+        this.page = page || 'weekly';
       },
 
       _pageChanged: function (page) {
         // load page import on demand.
-        this.importHref(this.resolveUrl(page + '.html'), null, null, true);
-        this.drawerOpened = false;
+        this.importHref(this.resolveUrl('ocgf-' + page + '.html'), null, null, true);
+        if(this.drawerHiding) this.drawerOpened = false;
       }
 
     });
