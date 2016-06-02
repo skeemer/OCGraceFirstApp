@@ -1,0 +1,96 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="ocgf-indexeddb-mirror.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../bower_components/juicy-html/juicy-html.html">
+
+<dom-module id="ocgf-study-guide">
+  <template>
+    <style>
+      paper-card {
+        @apply(--layout-vertical);
+        margin: 0 16px 16px 16px;
+      }
+
+      paper-card:first-of-type {
+        margin-top: 16px;
+      }
+
+      paper-card .card-actions paper-button {
+        margin: 10px 10px 10px 0;
+      }
+
+      paper-card .card-content {
+        padding-top: 0 !important;
+      }
+    </style>
+    <app-location route="{{route}}"></app-location>
+    <app-route route="{{route}}" pattern="/study-guide/:id" data="{{data}}"></app-route>
+    <iron-ajax auto
+               url="{{study-guide-url}}"
+               handle-as="json"
+               last-response="{{study-guide-live}}">
+    </iron-ajax>
+    <ocgf-indexeddb-mirror
+        key="{{post-key}}"
+        data="{{study-guide-live}}"
+        persisted-data="{{guide}}">
+    </ocgf-indexeddb-mirror>
+    <template is="dom-repeat" items="[[guide.acf.study_guide]]" as="card">
+      <paper-card heading="{{card.title}}" on-tap="openBulletin">
+        <template is="dom-if" if="[[showContent(card)]]">
+          <div class="card-content">
+            <template is="dom-if" if="[[showInstructions(card)]]">
+              <template is="juicy-html" content$="{{card.instruction}}"></template>
+            </template>
+            <template is="dom-if" if$="{{showNumbered(card)}}">
+              <ol start="[[card.start]]">
+                <template is="dom-repeat" items="{{card.set}}" as="item">
+                  <li>{{item.content}}</li>
+                </template>
+              </ol>
+            </template>
+          </div>
+        </template>
+      </paper-card>
+    </template>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'ocgf-study-guide',
+      openBulletin: function (e) {
+        window.open(e.model.bulletin.url, '_blank');
+      },
+      properties: {
+        route: {
+          type: Object,
+          notify: true
+        },
+        data: {
+          type: Object
+        }
+      },
+      observers: [
+        '_routePageChanged(data)'
+      ],
+      _routePageChanged: function (rd) {
+        this['post-key'] = "post-" + rd.id;
+        this['study-guide-url'] = "http://www.ocgracefirst.com/wp-json/acf/v2/study_guide/" + this.data.id;
+      },
+      showContent: function (card) {
+        return card.style != 'title';
+      },
+      showInstructions: function (card) {
+        return card.instruction != '';
+      },
+      showNumbered: function (card) {
+        return card.style == 'numbered';
+      }
+    });
+
+  </script>
+</dom-module>

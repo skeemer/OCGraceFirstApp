@@ -27,7 +27,14 @@
         route="{{route}}"
         pattern="/:page"
         data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        tail="{{subroute}}"
+        active="{{withDrawer}}"></app-route>
+    <app-route
+        route="{{route}}"
+        pattern="/study-guide"
+        tail="{{subroute}}"
+        active="{{withoutDrawer}}"></app-route>
+
 
     <iron-media-query query="max-width: 640px" query-matches="{{drawerHiding}}"></iron-media-query>
 
@@ -51,6 +58,7 @@
       .drawer-list {
         margin: 0 20px;
       }
+
       .drawer-list a {
         display: block;
         padding: 0 16px;
@@ -58,10 +66,12 @@
         text-decoration: none;
         color: var(--app-secondary-color);
       }
+
       .drawer-list a.iron-selected {
         color: black;
         font-weight: bold;
       }
+
       .drawer-list a.subroute {
         padding-left: 32px;
       }
@@ -70,7 +80,7 @@
     <app-drawer-layout fullbleed>
 
       <!-- Drawer content -->
-      <app-drawer opened="{{drawerOpened}}" swipe-open tabindex="0">
+      <app-drawer opened="{{withDrawer && drawerOpened}}" swipe-open tabindex="0">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="weekly" href="/">Quick List</a>
@@ -92,6 +102,7 @@
           <ocgf-weekly name="weekly"></ocgf-weekly>
           <ocgf-bulletins name="bulletins"></ocgf-bulletins>
           <ocgf-study-guides name="study-guides"></ocgf-study-guides>
+          <ocgf-study-guide name="study-guide"></ocgf-study-guide>
           <!--<my-data-test name="data-test"></my-data-test>-->
         </iron-pages>
 
@@ -119,11 +130,14 @@
       },
 
       observers: [
-        '_routePageChanged(routeData.page)'
+        '_routePageChanged(routeData)'
       ],
 
-      _routePageChanged: function (page) {
-        this.page = page || 'weekly';
+      _routePageChanged: function (routeData) {
+        if(this.withDrawer)
+          this.page = routeData.page || 'weekly';
+        else
+          this.page = 'study-guide'
       },
 
       _pageChanged: function (page) {

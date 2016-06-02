@@ -37,7 +37,7 @@
         <!--</div>-->
         <div class="card-actions">
           <paper-button raised disabled$="{{!week.bulletin}}" on-tap="openBulletin">Bulletin</paper-button>
-          <paper-button raised disabled$="{{!week.study_guide}}">Study Guide</paper-button>
+          <paper-button raised disabled$="{{!week.study_guide}}" on-tap="openStudyGuide">Study Guide</paper-button>
         </div>
       </paper-card>
       <div>[[repo.date]]</div>
@@ -49,6 +49,10 @@
       is: 'ocgf-weekly',
       openBulletin: function (e) {
         window.open(e.model.week.bulletin, '_blank');
+      },
+      openStudyGuide: function (e) {
+        var parts = e.model.week.study_guide.split('/');
+        window.location = '/study-guide/' + parts.pop();
       }
     });
 
