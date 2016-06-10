@@ -4,6 +4,7 @@
   "fragments": [
     "src/ocgf-weekly.html",
     "src/ocgf-bulletins.html",
-    "src/ocgf-study-guides.html"
+    "src/ocgf-study-guides.html",
+    "src/ocgf-study-guide.html"
   ]
 }
