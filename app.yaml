@@ -7,27 +7,27 @@ threadsafe: yes
 handlers:
 - url: /bower_components
   static_dir: build/bundled/bower_components
-  secure: never
+  secure: always
 
 - url: /images
   static_dir: build/bundled/images
-  secure: never
+  secure: always
 
 - url: /src
   static_dir: build/bundled/src
-  secure: never
+  secure: always
 
 - url: /service-worker.js
   static_files: build/bundled/service-worker.js
   upload: build/bundled/service-worker.js
-  secure: never
+  secure: always
 
 - url: /manifest.json
   static_files: build/bundled/manifest.json
   upload: build/bundled/manifest.json
-  secure: never
+  secure: always
 
 - url: /.*
   static_files: build/bundled/index.html
   upload: build/bundled/index.html
-  secure: never
+  secure: always
