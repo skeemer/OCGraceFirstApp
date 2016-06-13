@@ -27,8 +27,7 @@
         route="{{route}}"
         pattern="/:page"
         data="{{routeData}}"
-        tail="{{subroute}}"
-        active="{{withDrawer}}"></app-route>
+        tail="{{subroute}}"></app-route>
     <app-route
         route="{{route}}"
         pattern="/study-guide"
@@ -93,7 +92,8 @@
       <app-header-layout has-scrolling-region>
         <app-header effects="waterfall">
           <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+            <template is="dom-if" if="{{showDrawerIcon}}"><paper-icon-button icon="menu" drawer-toggle></paper-icon-button></template>
+            <template is="dom-if" if="{{showBackIcon}}"><paper-icon-button icon="arrow-back" on-tap="goBack"></paper-icon-button></template>
             <div title>OC Grace First App</div>
           </app-toolbar>
         </app-header>
@@ -126,15 +126,25 @@
         },
         subroute: {
           type: Object
+        },
+        showDrawerIcon: {
+          type: Boolean,
+          value: false
+        },
+        showBackIcon: {
+          type: Boolean,
+          value: false
         }
       },
 
       observers: [
-        '_routePageChanged(routeData)'
+        '_routePageChanged(routeData)',
+        '_showDrawerIcon(withoutDrawer)',
+        '_showBackIcon(withoutDrawer)'
       ],
 
       _routePageChanged: function (routeData) {
-        if(this.withDrawer)
+        if(!this.withoutDrawer)
           this.page = routeData.page || 'weekly';
         else
           this.page = 'study-guide'
@@ -144,8 +154,16 @@
         // load page import on demand.
         this.importHref(this.resolveUrl('ocgf-' + page + '.html'), null, null, true);
         if(this.drawerHiding) this.drawerOpened = false;
+      },
+      _showDrawerIcon: function (withoutDrawer) {
+        this.showDrawerIcon = !withoutDrawer;
+      },
+      _showBackIcon: function (withoutDrawer) {
+        this.showBackIcon = withoutDrawer;
+      },
+      goBack: function () {
+        window.history.back();
       }
-
     });
   </script>
 </dom-module>
