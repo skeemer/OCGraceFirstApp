@@ -67,13 +67,13 @@
       }
 
       .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
+        color: var(--app-primary-color);
       }
 
       .drawer-list a.subroute {
         padding-left: 32px;
       }
+
     </style>
 
     <app-drawer-layout fullbleed>
@@ -82,9 +82,9 @@
       <app-drawer opened="{{withDrawer && drawerOpened}}" swipe-open tabindex="0">
         <app-toolbar>Menu</app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="weekly" href="/">Quick List</a>
-          <a name="bulletins" href="/bulletins">Bulletins</a>
-          <a name="study-guides" href="/study-guides">Study Guides</a>
+          <a name="weekly" href="/"><paper-icon-button icon="date-range"></paper-icon-button> Quick List</a>
+          <a name="bulletins" href="/bulletins"><paper-icon-button icon="chrome-reader-mode"></paper-icon-button> Bulletins</a>
+          <a name="study-guides" href="/study-guides"><paper-icon-button icon="subject"></paper-icon-button> Study Guides</a>
         </iron-selector>
       </app-drawer>
 
