@@ -10,9 +10,11 @@
         @apply(--layout-vertical);
         margin: 0 16px 16px 16px;
       }
+
       paper-card:first-of-type {
         margin-top: 16px;
       }
+
       paper-card .card-actions paper-button {
         margin: 10px 10px 10px 0;
       }
@@ -29,7 +31,7 @@
         persisted-data="{{study-guides}}">
     </ocgf-indexeddb-mirror>
     <template is="dom-repeat" items="[[study-guides]]" as="study-guide">
-      <paper-card heading="[[study-guide.title]]">
+      <paper-card heading="[[study-guide.title]]" on-tap="openStudyGuide">
         <paper-ripple recenters></paper-ripple>
       </paper-card>
     </template>
@@ -40,6 +42,9 @@
       is: 'ocgf-study-guides',
       isUndefined: function (field) {
         return field === undefined;
+      },
+      openStudyGuide: function (e) {
+        window.location = '/study-guide/' + e.model['study-guide'].id;
       }
     });
 
