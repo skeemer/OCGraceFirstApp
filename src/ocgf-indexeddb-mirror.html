@@ -170,8 +170,8 @@ be available through this element.
            */
           workerUrl: {
             type: String,
-            value() {
-              return this.resolveUrl('./app-indexeddb-mirror-worker.js');
+            value: function() {
+              return this.resolveUrl('/bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror-worker.js');
             }
           },
 
@@ -249,29 +249,23 @@ be available through this element.
             return this.client.validateSession(this.session);
           });
 
-          if (this.online) {
+          if (this.online && this.data !== undefined && this.data !== null) {
+            console.log('online');
             this.persistedData = this.data;
             this.linkPaths('data', 'persistedData');
           } else {
-            this.__retrievePersistedData();
+            console.log('offline');
+            this.unlinkPaths('data', 'persistedData');
+            this._enqueueTransaction(function() {
+              return this.getStoredValue().then(function(value) {
+                // We may have gone online since retrieving the persisted value..
+                if (this.online || !this.client.supportsMirroring) {
+                  return;
+                }
+                this.persistedData = value;
+              }.bind(this));
+            });
           }
-        },
-
-        __retrievePersistedData: function () {
-          this.unlinkPaths('data', 'persistedData');
-          this._enqueueTransaction(function() {
-            return this.getStoredValue().then(function(value) {
-              // We may have gone online since retrieving the persisted value..
-              if ((this.online && this.data !== undefined) || !this.client.supportsMirroring) {
-                return;
-              }
-              this.persistedData = value;
-            }.bind(this));
-          });
-        },
-
-        ready: function () {
-          this.__retrievePersistedData();
         }
       });
     })();

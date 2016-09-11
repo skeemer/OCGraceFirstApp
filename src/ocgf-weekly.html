@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="ocgf-indexeddb-mirror.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
@@ -27,7 +28,9 @@
     <ocgf-indexeddb-mirror
         key="weekly"
         data="{{weekly-live}}"
-        persisted-data="{{weekly}}">
+        persisted-data="{{weekly}}"
+        ignore-values='[null,undefined]'
+        log="true">
     </ocgf-indexeddb-mirror>
     <template is="dom-repeat" items="{{weekly}}" as="week">
       <paper-card heading="{{week.date}}">
@@ -47,6 +50,11 @@
   <script>
     Polymer({
       is: 'ocgf-weekly',
+      attached: function() {
+        this.async(function() {
+          this.dataUrl = '';
+        });
+      },
       openBulletin: function (e) {
         window.open(e.model.week.bulletin, '_blank');
       },

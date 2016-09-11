@@ -6,5 +6,16 @@
     "src/ocgf-bulletins.html",
     "src/ocgf-study-guides.html",
     "src/ocgf-study-guide.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "bower_components/app-storage/app-indexeddb-mirror/common-worker-scope.js",
+    "bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror-worker.js"
   ]
 }

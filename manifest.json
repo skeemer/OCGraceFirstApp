@@ -1,31 +1,46 @@
 {
-  "name": "OC Grace First",
-  "short_name": "OC Grace First",
+  "name": "OCG First",
+  "short_name": "OCG First",
   "icons": [
     {
-      "src": "images/app-icon-32.png",
+      "src": "images/app-icon-48.png",
       "type": "image/png",
-      "sizes": "32x32"
+      "sizes": "48x48"
     },
     {
-      "src": "images/app-icon.svg",
-      "sizes": "128x128",
-      "type": "image/svg"
+      "src": "images/app-icon-72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "images/app-icon-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
     },
     {
       "src": "images/app-icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "144x144"
     },
     {
-      "src": "images/app-icon.svg",
-      "sizes": "192x192",
-      "type": "image/svg"
+      "src": "images/app-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
     },
     {
-      "src": "images/app-icon.svg",
-      "sizes": "384x384",
-      "type": "image/svg"
+      "src": "images/app-icon-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "images/app-icon-384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "images/app-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "description": "This is for viewing OC Grace First information quickly.",
