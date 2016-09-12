@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
@@ -94,7 +94,7 @@
           <app-toolbar>
             <template is="dom-if" if="{{showDrawerIcon}}"><paper-icon-button icon="menu" drawer-toggle></paper-icon-button></template>
             <template is="dom-if" if="{{showBackIcon}}"><paper-icon-button icon="arrow-back" on-tap="goBack"></paper-icon-button></template>
-            <div title>OC Grace First App</div>
+            <div main-title>OC Grace First App</div>
           </app-toolbar>
         </app-header>
 
