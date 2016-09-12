@@ -8,16 +8,29 @@
 <dom-module id="ocgf-weekly">
   <template>
     <style>
+      :host {
+        --paper-card-header-text: {
+          padding-bottom: 0;
+        };
+        --paper-card-content: {
+          padding-top: 0;
+        }
+      }
+
       paper-card {
         @apply(--layout-vertical);
         margin: 0 16px 16px 16px;
       }
+
       paper-card:first-of-type {
         margin-top: 16px;
       }
+
       paper-card .card-actions paper-button {
         margin: 10px 10px 10px 0;
       }
+
+
     </style>
     <iron-ajax auto
                url="https://www.ocgracefirst.com/wp-json/llch/v2/weekly/current/last/3"
@@ -33,14 +46,15 @@
         log="true">
     </ocgf-indexeddb-mirror>
     <template is="dom-repeat" items="{{weekly}}" as="week">
-      <paper-card heading="{{week.date}}">
-        <!--<div class="card-content">-->
-           <!--&ndash;-->
-          <!--Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.-->
-        <!--</div>-->
+      <paper-card heading="{{week.event}}">
+        <div class="card-content">
+          {{week.date}}
+        </div>
         <div class="card-actions">
-          <paper-button raised disabled$="{{!week.bulletin}}" on-tap="openBulletin">Bulletin</paper-button>
           <paper-button raised disabled$="{{!week.study_guide}}" on-tap="openStudyGuide">Study Guide</paper-button>
+          <template is="dom-if" if="{{_isChurch(week)}}">
+            <paper-button raised disabled$="{{!week.bulletin}}" on-tap="openBulletin">Bulletin</paper-button>
+          </template>
         </div>
       </paper-card>
       <div>[[repo.date]]</div>
@@ -50,8 +64,8 @@
   <script>
     Polymer({
       is: 'ocgf-weekly',
-      attached: function() {
-        this.async(function() {
+      attached: function () {
+        this.async(function () {
           this.dataUrl = '';
         });
       },
@@ -61,6 +75,9 @@
       openStudyGuide: function (e) {
         var parts = e.model.week.study_guide.split('/');
         window.location = '/study-guide/' + parts.pop();
+      },
+      _isChurch: function (week) {
+        return week.event == 'Church'
       }
     });
 
