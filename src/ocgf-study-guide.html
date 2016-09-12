@@ -49,7 +49,7 @@
             <template is="dom-if" if$="{{showNumbered(card)}}">
               <ol start="[[card.start]]">
                 <template is="dom-repeat" items="{{card.set}}" as="item">
-                  <li>{{item.content}}</li>
+                  <li><template is="juicy-html" content$="{{item.content}}"></template></li>
                 </template>
               </ol>
             </template>
