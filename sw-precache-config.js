@@ -1,4 +1,5 @@
 module.exports = {
+  cacheId: 'ocg1app-v2',
   runtimeCaching: [
     {
       urlPattern: new RegExp('/bower_components/app-storage/app-indexeddb-mirror/common-worker-scope.js\\?.*'),
