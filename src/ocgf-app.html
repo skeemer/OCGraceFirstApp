@@ -94,7 +94,7 @@
           <app-toolbar>
             <template is="dom-if" if="{{showDrawerIcon}}"><paper-icon-button icon="menu" drawer-toggle></paper-icon-button></template>
             <template is="dom-if" if="{{showBackIcon}}"><paper-icon-button icon="arrow-back" on-tap="goBack"></paper-icon-button></template>
-            <div main-title>OC Grace First App</div>
+            <div main-title>OC Grace First</div>
           </app-toolbar>
         </app-header>
 
@@ -144,10 +144,10 @@
       ],
 
       _routePageChanged: function (routeData) {
-        if(!this.withoutDrawer)
-          this.page = routeData.page || 'weekly';
-        else
-          this.page = 'study-guide'
+        //if(!this.withoutDrawer)
+        this.page = routeData.page || 'weekly';
+        //else
+        //  this.page = 'study-guide'
       },
 
       _pageChanged: function (page) {
